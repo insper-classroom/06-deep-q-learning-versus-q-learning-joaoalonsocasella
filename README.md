@@ -1,1 +1,11 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/3cFWPdqG)
+Estudo Deep Reinforcement Learning (Deep-Q-Learning)
+
+Como visto em aula, a aplicação DeepQLearning nos permite uma aproximação da função Q(s,a) sem precisar explicitamente armazenar cada combinação de estado e ação. Em termos computacionais, visto o exemplo do "Atari" (que imprime cada estado como sendo uma imagem de 210x160), uma solução usando Q-table como Q-Learning ou SARSA seria inviável. Assim, soluções como o DeepQLearning tornam possível o treinamento do agente, sem esse peso computacional.
+
+
+| Característica |	Q-Table	Rede Neural (DQN) |
+|Espaço de estados |	Pequeno	Muito grande |
+|Generalização |	Baixa |	Alta |
+|Eficiência computacional |	Ruim para problemas grandes	| Melhor para problemas complexos |
+|Ambientes contínuos	| Ineficiente	| Funciona bem |
+|Escalabilidade	| Péssima para estados grandes |	Excelente |
