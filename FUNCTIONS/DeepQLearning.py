@@ -26,12 +26,15 @@ class DeepQLearning:
 
     def select_action(self, state):
         if np.random.rand() < self.epsilon:
-            return random.randrange(self.env.action_space.n)
-        
-        state = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
-        with torch.no_grad():
-            action_values = self.model(state)
-        return torch.argmax(action_values).item()
+            action = random.randrange(self.env.action_space.n)
+            #print(f"[Exploração] Ação aleatória escolhida: {action}")
+        else:
+            state_tensor = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
+            with torch.no_grad():
+                action_values = self.model(state_tensor)
+            action = torch.argmax(action_values).item()
+            #print(f"[Exploração] Ação baseada no modelo: {action}")
+        return action
     
     def experience(self, state, action, reward, next_state, terminal):
         self.memory.append((state, action, reward, next_state, terminal))
@@ -48,9 +51,9 @@ class DeepQLearning:
 
             # Obter os valores Q estimados pela rede para os estados atuais
             
-            print(f"Shape de q_values antes do gather: {self.model(states).shape}")
-            print(f"Shape de actions antes do view: {actions.shape}")
-            print(f"Shape de actions após o view: {actions.view(-1, 1).shape}")
+            # print(f"Shape de q_values antes do gather: {self.model(states).shape}")
+            # print(f"Shape de actions antes do view: {actions.shape}")
+            # print(f"Shape de actions após o view: {actions.view(-1, 1).shape}")
             q_values = self.model(states).gather(1, actions.view(-1, 1)).squeeze(1)
 
             # Calcular os valores Q esperados para os próximos estados (somente para estados não terminais)
@@ -75,30 +78,36 @@ class DeepQLearning:
 
     def train(self):
         rewards = []
-        for i in range(self.episodes+1):
+        for i in range(self.episodes + 1):
             state, _ = self.env.reset()
             state = np.reshape(state, (1, self.env.observation_space.shape[0]))
             score = 0
             steps = 0
             done = False
-            
-            while not done:
+
+            while not done and steps < self.max_steps:
                 steps += 1
                 action = self.select_action(state)
                 next_state, reward, terminal, truncated, _ = self.env.step(action)
-                if terminal or truncated or (steps > self.max_steps):
-                    done = True          
-                score += reward
+
+                # Recompensa bônus se alcançar o topo
+                if next_state[0] >= 0.5:
+                    reward += 100
+
+                score += reward  # Soma recompensa corretamente
+
+                # Armazena a experiência e treina
                 next_state = np.reshape(next_state, (1, self.env.observation_space.shape[0]))
                 self.experience(state, action, reward, next_state, terminal)
                 state = next_state
                 self.experience_replay()
-                
-                if done:
-                    print(f'Episódio: {i+1}/{self.episodes}. Score: {score}')
-                    break
-            
+
+                # Verifica se o episódio acabou
+                if terminal or truncated:
+                    done = True
+                    
+            print(f'Episódio: {i+1}/{self.episodes}. Score: {score}')
             rewards.append(score)
             gc.collect()
-        
+
         return rewards
