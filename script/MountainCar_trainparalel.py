@@ -1,4 +1,5 @@
 import torch
+torch.cuda.set_per_process_memory_fraction(0.2, device=0)
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
@@ -24,7 +25,7 @@ epsilon = 1.0
 epsilon_min = 0.01
 epsilon_dec = 0.995
 episodes = 10000
-batch_size = 64
+batch_size = 32
 learning_rate = 0.001
 max_steps = 500
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -47,6 +48,7 @@ class DQN(nn.Module):
 
 # Função de treino individual por processo
 def run_training(process_id):
+    torch.cuda.empty_cache()
     env = gym.make('MountainCar-v0', max_episode_steps=1000)
     model = DQN(env.observation_space.shape[0], env.action_space.n).to(device)
     memory = deque(maxlen=10_000)
@@ -79,3 +81,7 @@ if __name__ == '__main__':
         processes.append(p)
     for p in processes:
         p.join()
+
+# PARA RODAR, JOGAR NO TERMINAL: python -u  .\script\MountainCar_trainparalel.py
+
+
