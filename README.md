@@ -41,7 +41,7 @@ Detalhar resultados do Q-Learning (gráficos e análises)
 
 Uma vez analisados individualmente, segue a conclusão comparativa entre os dois métodos. A imagem a seguir plota os resultados em desempenho médio de cada método, assim como a meta de qualidade de modelo:
 
-<img src="images/comparacao_dqn_vs_qlearning.png" alt="Curva Média de Aprendizado DQN (N = 5)" width="500">
+<img src="images/comparacao_DQN_vs_QL.png" alt="Curva Média de Aprendizado DQN (N = 5)" width="500">
 
 
 <p align="justify">
