@@ -33,9 +33,15 @@ As imagens a seguir ilustram o desempenho da curva de aprendizado do modelo Q-Le
 
 <img src="images/comparacao_QL_media.png" alt="Curva Média de Aprendizado DQN (N = 5)" width="500">
 
-<p align="justify">
-Detalhar resultados do Q-Learning (gráficos e análises)
-</p>
+<p align="justify"> Os resultados obtidos com o Q-Learning mostram que, apesar das limitações inerentes à discretização do espaço de estados, o agente conseguiu aprender uma política razoavelmente eficiente para resolver o ambiente MountainCar-v0. A análise das curvas de aprendizado revela um padrão de convergência relativamente rápido nas primeiras interações, mas com maior variabilidade nas recompensas ao longo dos episódios, especialmente quando comparado ao Deep Q-Learning. </p>
+
+<p align="justify"> No primeiro gráfico, que exibe a evolução da recompensa média móvel para cada uma das execuções, podemos observar que todas as rodadas seguem um padrão semelhante: no início do treinamento, as recompensas são extremamente baixas, com valores próximos de -500, pois o agente ainda está explorando o ambiente sem um conhecimento sólido da melhor estratégia. No entanto, conforme o aprendizado avança, as recompensas começam a aumentar rapidamente e, por volta do episódio 1000, todas as execuções atingem um patamar próximo à meta de desempenho (-110). </p>
+
+<p align="justify"> No entanto, diferente do Deep Q-Learning, o Q-Learning apresenta uma dispersão maior entre as diferentes execuções, com algumas rodadas conseguindo manter um desempenho mais consistente, enquanto outras oscilam mais. Isso pode ser atribuído ao fato de que a atualização tabular da Q-table depende diretamente da discretização dos estados e das escolhas específicas feitas pelo agente durante a fase inicial de exploração. Pequenas variações na trajetória de aprendizado podem levar a diferenças significativas nos valores armazenados na tabela Q. </p>
+
+<p align="justify"> O segundo gráfico, que representa a recompensa média ao longo das execuções, deixa ainda mais evidente essa oscilação. Embora o agente tenha sido capaz de atingir a meta de recompensa, sua curva de aprendizado apresenta flutuações mais intensas em relação ao Deep Q-Learning. O intervalo de desvio padrão também é consideravelmente maior, refletindo a instabilidade da abordagem baseada em Q-tables. Isso se deve à falta de generalização do método, que exige um número muito maior de interações para cobrir todas as possíveis combinações de estados e ações de forma eficiente. </p>
+
+<p align="justify"> Apesar dessas limitações, é interessante notar que o Q-Learning ainda consegue aprender uma estratégia funcional para o problema, atingindo a meta estabelecida na maioria das execuções. Isso sugere que, para problemas de baixa dimensionalidade e espaços de estados discretizáveis, o método ainda pode ser uma alternativa viável, principalmente quando não há recursos computacionais suficientes para treinar redes neurais profundas. No entanto, conforme discutiremos a seguir na comparação entre os dois métodos, o Deep Q-Learning oferece vantagens significativas em termos de estabilidade, desempenho e generalização. </p>
 
 ### Comparação Final: Deep Q-Learning vs Q-Learning
 
@@ -44,27 +50,25 @@ Uma vez analisados individualmente, segue a conclusão comparativa entre os dois
 <img src="images/comparacao_DQN_vs_QL.png" alt="Curva Média de Aprendizado DQN (N = 5)" width="500">
 
 
-<p align="justify">
-Detalhar resultados da comparação (gráficos e análises)
-</p>
+<p align="justify"> A análise comparativa entre Deep Q-Learning (DQL) e Q-Learning (QL) revela diferenças significativas no desempenho dos algoritmos para a resolução do problema MountainCar-v0. O gráfico acima evidencia essas diferenças ao apresentar a trajetória de aprendizado médio dos dois métodos ao longo dos episódios. </p>
+
+<p align="justify"> A primeira observação importante é a **velocidade de aprendizado**: o DQL atinge rapidamente a meta de recompensa de -110, enquanto o Q-Learning demora mais tempo para estabilizar sua política. Isso ocorre porque o DQL utiliza uma rede neural para aprender e generalizar sobre o espaço contínuo de estados, enquanto o Q-Learning depende de uma tabela Q discreta, que requer mais interações para cobrir uma fração significativa do espaço de estados. </p>
+
+<p align="justify"> Além disso, o **desvio padrão** das recompensas ao longo do treinamento é menor no DQL do que no Q-Learning. No Q-Learning, há uma oscilação constante nos valores aprendidos, refletindo a dificuldade do algoritmo em encontrar uma política ótima estável. Já no DQL, observa-se uma redução progressiva dessa oscilação, indicando que o modelo aprendeu uma política mais consistente e generalizável. </p>
+
+<p align="justify"> Outro ponto crítico é a **estabilidade após a convergência**. O DQL mantém um desempenho médio acima da meta de recompensa durante praticamente todo o treinamento, enquanto o Q-Learning apresenta quedas esporádicas e uma variabilidade maior mesmo após milhares de episódios. Isso reforça a ideia de que o DQL, por contar com uma função de aproximação baseada em rede neural, consegue capturar melhor os padrões do ambiente e tomar decisões mais eficientes. </p>
+
+<p align="justify"> Por fim, sintetizamos as principais diferenças entre os métodos na tabela abaixo: </p>
+
+| Característica                  | Q-Learning                          | Deep Q-Learning (DQL)            |
+|----------------------------------|-------------------------------------|----------------------------------|
+| **Velocidade de Convergência**   | Lenta                               | Rápida                           |
+| **Generalização**                | Baixa                               | Alta                             |
+| **Eficiência Computacional**     | Ruim para estados contínuos         | Melhor para espaços grandes      |
+| **Estabilidade da Política**     | Oscilação constante                 | Mais consistente                 |
+| **Variabilidade Entre Execuções**| Alta                                | Baixa                            |
+| **Desempenho Final**             | Próximo, mas abaixo da meta (-110)  | Atinge e mantém a meta (-110)    |
 
 
-### Conclusão
-
-<p align="justify">
-Conclusão objetiva e numérica
-</p>
-
-
-<sub>
-
-| Característica            | Q-Table                         | Rede Neural (DQN)            |
-|---------------------------|--------------------------------|------------------------------|
-| Espaço de estados         | Pequeno                        | Muito grande                 |
-| Generalização             | Baixa                          | Alta                         |
-| Eficiência computacional  | Ruim para problemas grandes    | Melhor para problemas complexos |
-| Ambientes contínuos       | Ineficiente                    | Funciona bem                 |
-| Escalabilidade           | Péssima para estados grandes   | Excelente                     |
-
-</sub>
+<p align="justify"> Com base nessas evidências, podemos concluir que **o Deep Q-Learning se mostra mais eficiente para resolver o problema MountainCar-v0**. A combinação de aprendizado por reforço com redes neurais permite que o modelo **aprenda políticas melhores, com maior estabilidade e menor variação entre execuções**. O Q-Learning, embora funcional, apresenta limitações claras quando aplicado a ambientes contínuos e de alta dimensionalidade, reforçando a necessidade de aproximação de funções em problemas mais complexos. </p>
 
