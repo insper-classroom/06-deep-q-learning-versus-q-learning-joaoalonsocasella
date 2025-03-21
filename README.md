@@ -7,11 +7,13 @@ Como visto em aula, a aplicação DeepQLearning nos permite uma aproximação da
 
 ### Desempenho do Deep Q-Learning (DQN)
 
+<p align="justify">
 As imagens a seguir ilustram o desempenho da curva de aprendizado do modelo Deep-Q-Learning:
+</p>
 
-<img src="images/comparacao_DQN_ma125.png" alt="Curvas de Aprendizado DQN (N = 5)" width="500">
+<img src="images/comparacao_DQN_ma125.png" alt="Curvas de Aprendizado DQN (N = 5)" width="800">
 
-<img src="images/comparacao_DQN_media.png" alt="Curva Média de Aprendizado DQN (N = 5)" width="500">
+<img src="images/comparacao_DQN_media.png" alt="Curva Média de Aprendizado DQN (N = 5)" width="800">
 
 <p align="justify">
 Torna-se evidente ao observá-las que o método traz consigo uma capacidade boa de abranger grandes espaços de estados, com alta generalização, eficiência computacional e escalabilidade, ou seja, funciona bem em ambientes contínuos e complexos. A comparação entre as várias execuções mostra que a consistência entre as rodadas de treinamento é alta... as curvas das diferentes execuções seguem um padrão semelhante, demonstrando que o modelo não é excessivamente sensível às condições iniciais ou ao ruído estocástico do ambiente.
@@ -27,11 +29,13 @@ Outro aspecto interessante é que, embora a recompensa média estabilize próxim
 
 ### Desempenho do Q-Learning
 
+<p align="justify">
 As imagens a seguir ilustram o desempenho da curva de aprendizado do modelo Q-Learning:
+</p>
 
-<img src="images/comparacao_QL_ma125.png" alt="Curvas de Aprendizado DQN (N = 5)" width="500">
+<img src="images/comparacao_QL_ma125.png" alt="Curvas de Aprendizado DQN (N = 5)" width="800">
 
-<img src="images/comparacao_QL_media.png" alt="Curva Média de Aprendizado DQN (N = 5)" width="500">
+<img src="images/comparacao_QL_media.png" alt="Curva Média de Aprendizado DQN (N = 5)" width="800">
 
 <p align="justify"> Os resultados obtidos com o Q-Learning mostram que, apesar das limitações inerentes à discretização do espaço de estados, o agente conseguiu aprender uma política razoavelmente eficiente para resolver o ambiente MountainCar-v0. A análise das curvas de aprendizado revela um padrão de convergência relativamente rápido nas primeiras interações, mas com maior variabilidade nas recompensas ao longo dos episódios, especialmente quando comparado ao Deep Q-Learning. </p>
 
@@ -45,18 +49,20 @@ As imagens a seguir ilustram o desempenho da curva de aprendizado do modelo Q-Le
 
 ### Comparação Final: Deep Q-Learning vs Q-Learning
 
+<p align="justify">
 Uma vez analisados individualmente, segue a conclusão comparativa entre os dois métodos. A imagem a seguir plota os resultados em desempenho médio de cada método, assim como a meta de qualidade de modelo:
+</p>
 
-<img src="images/comparacao_DQN_vs_QL.png" alt="Curva Média de Aprendizado DQN (N = 5)" width="500">
+<img src="images/comparacao_DQN_vs_QL.png" alt="Curva Média de Aprendizado DQN (N = 5)" width="800">
 
 
 <p align="justify"> A análise comparativa entre Deep Q-Learning (DQL) e Q-Learning (QL) revela diferenças significativas no desempenho dos algoritmos para a resolução do problema MountainCar-v0. O gráfico acima evidencia essas diferenças ao apresentar a trajetória de aprendizado médio dos dois métodos ao longo dos episódios. </p>
 
-<p align="justify"> A primeira observação importante é a **velocidade de aprendizado**: o DQL atinge rapidamente a meta de recompensa de -110, enquanto o Q-Learning demora mais tempo para estabilizar sua política. Isso ocorre porque o DQL utiliza uma rede neural para aprender e generalizar sobre o espaço contínuo de estados, enquanto o Q-Learning depende de uma tabela Q discreta, que requer mais interações para cobrir uma fração significativa do espaço de estados. </p>
+<p align="justify"> A primeira observação importante é a velocidade de aprendizado: o DQL atinge rapidamente a meta de recompensa de -110, enquanto o Q-Learning demora mais tempo para estabilizar sua política. Isso ocorre porque o DQL utiliza uma rede neural para aprender e generalizar sobre o espaço contínuo de estados, enquanto o Q-Learning depende de uma tabela Q discreta, que requer mais interações para cobrir uma fração significativa do espaço de estados. </p>
 
-<p align="justify"> Além disso, o **desvio padrão** das recompensas ao longo do treinamento é menor no DQL do que no Q-Learning. No Q-Learning, há uma oscilação constante nos valores aprendidos, refletindo a dificuldade do algoritmo em encontrar uma política ótima estável. Já no DQL, observa-se uma redução progressiva dessa oscilação, indicando que o modelo aprendeu uma política mais consistente e generalizável. </p>
+<p align="justify"> Além disso, o desvio padrão das recompensas ao longo do treinamento é menor no DQL do que no Q-Learning. No Q-Learning, há uma oscilação constante nos valores aprendidos, refletindo a dificuldade do algoritmo em encontrar uma política ótima estável. Já no DQL, observa-se uma redução progressiva dessa oscilação, indicando que o modelo aprendeu uma política mais consistente e generalizável. </p>
 
-<p align="justify"> Outro ponto crítico é a **estabilidade após a convergência**. O DQL mantém um desempenho médio acima da meta de recompensa durante praticamente todo o treinamento, enquanto o Q-Learning apresenta quedas esporádicas e uma variabilidade maior mesmo após milhares de episódios. Isso reforça a ideia de que o DQL, por contar com uma função de aproximação baseada em rede neural, consegue capturar melhor os padrões do ambiente e tomar decisões mais eficientes. </p>
+<p align="justify"> Outro ponto crítico é a estabilidade após a convergência. O DQL mantém um desempenho médio acima da meta de recompensa durante praticamente todo o treinamento, enquanto o Q-Learning apresenta quedas esporádicas e uma variabilidade maior mesmo após milhares de episódios. Isso reforça a ideia de que o DQL, por contar com uma função de aproximação baseada em rede neural, consegue capturar melhor os padrões do ambiente e tomar decisões mais eficientes. </p>
 
 <p align="justify"> Por fim, sintetizamos as principais diferenças entre os métodos na tabela abaixo: </p>
 
